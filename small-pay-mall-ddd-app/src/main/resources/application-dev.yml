@@ -30,6 +30,15 @@ spring:
      connection-test-query: SELECT 1
     type: com.zaxxer.hikari.HikariDataSource
 
+weixin:
+  config:
+    originalid: ${WEIXIN_ORIGINALID}
+    token: ${WEIXIN_TOKEN}
+    app-id: ${WEIXIN_APP_ID}
+    app-secret: ${WEIXIN_APP_SECRET}
+    template_id: ${WEIXIN_TEMPLATE_ID}
+
+
 # MyBatis 配置【如需使用记得打开】
 #mybatis:
 #  mapper-locations: classpath:/mybatis/mapper/*.xml
