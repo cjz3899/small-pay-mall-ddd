@@ -1,4 +1,4 @@
-CONTAINER_NAME=small-pay-mall-ddd
+CONTAINER_NAME=small-pay-mall-ddd-app
 IMAGE_NAME=system/small-pay-mall-ddd:1.0-SNAPSHOT
 PORT=8091
 
