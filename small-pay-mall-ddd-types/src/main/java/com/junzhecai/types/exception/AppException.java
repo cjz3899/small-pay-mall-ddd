@@ -3,16 +3,23 @@ package com.junzhecai.types.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AppException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 5317680961212299217L;
 
-    /** 异常码 */
+    /**
+     * 异常码
+     */
     private String code;
 
-    /** 异常信息 */
+    /**
+     * 异常信息
+     */
     private String info;
 
     public AppException(String code) {

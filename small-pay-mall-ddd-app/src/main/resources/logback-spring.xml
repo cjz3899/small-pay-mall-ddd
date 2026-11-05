@@ -102,6 +102,11 @@
         <logger name="com.nmys.view" level="debug"/>
     </springProfile>
 
+    <!-- 支付宝 SDK 内部日志（logger 名为 sdk.comm.err / sdk.biz.err / sdk.biz.info），查单未支付时会刷 TRADE_NOT_EXIST -->
+    <logger name="sdk.comm.err" level="OFF"/>
+    <logger name="sdk.biz.err" level="OFF"/>
+    <logger name="sdk.biz.info" level="OFF"/>
+
     <root level="info">
         <appender-ref ref="CONSOLE"/>
         <!-- 异步日志-INFO -->
