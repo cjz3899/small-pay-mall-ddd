@@ -6,7 +6,6 @@
 [![Spring Boot 3.4.3](https://img.shields.io/badge/Spring%20Boot-3.4.3-brightgreen?style=flat-square)](./pom.xml)
 [![6 Modules](https://img.shields.io/badge/Maven-6%20Modules-blue?style=flat-square)](./pom.xml)
 
-> 本文档中的版本号、路径、接口、配置项与命令，均依据仓库内现有代码和配置文件整理，不虚构仓库中不存在的脚本、命令或配置。
 
 ## 目录
 
