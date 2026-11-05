@@ -6,7 +6,6 @@
 [![Spring Boot 3.4.3](https://img.shields.io/badge/Spring%20Boot-3.4.3-brightgreen?style=flat-square)](./pom.xml)
 [![6 Modules](https://img.shields.io/badge/Maven-6%20Modules-blue?style=flat-square)](./pom.xml)
 
-
 ## 目录
 
 - [项目简介](#项目简介)
@@ -50,22 +49,7 @@ HTTP 接口，对内通过领域服务编排业务，通过端口（Port）与�
 
 下图表示各模块 POM 中的依赖方向，`app` 负责装配与启动，`trigger` 负责外部触发，`domain` 不依赖具体技术实现。
 
-```mermaid
-graph TD
-    APP["app<br/>启动入口 / 配置 / Bean 装配"]
-    TRIGGER["trigger<br/>HTTP 接口 / 定时任务 / 监听器"]
-    API["api<br/>接口契约 / DTO / 统一响应"]
-    DOMAIN["domain<br/>聚合 / 实体 / 领域服务 / 端口定义"]
-    INFRA["infrastructure<br/>端口适配 / DAO / 外部网关"]
-    TYPES["types<br/>常量 / 枚举 / 异常 / 事件基类"]
-    APP --> TRIGGER
-    APP --> INFRA
-    TRIGGER --> API
-    TRIGGER --> DOMAIN
-    TRIGGER --> TYPES
-    INFRA --> DOMAIN
-    DOMAIN --> TYPES
-```
+![模块依赖与分层图](./docs/asset/img01.png)
 
 > 说明：图中箭头均表示各模块 `pom.xml` 中的 Maven 依赖方向；`api` 定义的 `IAuthService`、`IPayService` 由 `trigger` 中的
 > Controller 实现，`types` 被 `domain`、`trigger` 等模块复用。
@@ -85,22 +69,9 @@ graph TD
 
 ### 主链路流程
 
-```mermaid
-flowchart LR
-    A["获取二维码 ticket"] --> B["微信 SCAN 事件回调"]
-    B --> C["轮询 check_login 得到 openid"]
-    C --> D["POST create_pay_order"]
-    D --> E{"同用户同商品<br/>已有未完成订单?"}
-    E -->|是| F["复用原订单 / 补建支付单"]
-    E -->|否| G["查商品 → 建聚合 → 落库 → 建支付单"]
-    F --> H["返回支付宝表单 HTML"]
-    G --> H
-    H --> I["前端自动提交表单，跳转沙箱收银台"]
-    I --> J["pay_notify 回调 + RSA2 验签"]
-    J --> K["状态置为 PAY_SUCCESS + 发布事件"]
-    L["定时查单补偿"] --> K
-    M["超时关单任务"] --> N["状态置为 CLOSE"]
-```
+下图展示从扫码登录到支付成功的完整链路，以及掉单补偿与超时关单两条定时旁路。
+
+![下单到支付成功主链路图](./docs/asset/img02.png)
 
 ### 订单状态
 
@@ -378,6 +349,7 @@ small-pay-mall-ddd/
 ├── pom.xml                                  # 父 POM：模块、依赖版本、插件、profiles
 ├── README.md
 ├── docs/
+│   ├── asset/                               # README 配图：img01.png、img02.png
 │   └── dev-ops/                             # 运维编排与演示资源
 │       ├── app/                             # 容器启停脚本
 │       │   ├── start.sh
